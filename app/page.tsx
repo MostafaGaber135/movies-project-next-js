@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import MoviesList from "./components/MoviesList/MoviesList";
 import { Movie } from "./types/movie";
 
-export default function Home() {
+export default function HomeClient() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
 
@@ -15,13 +15,9 @@ export default function Home() {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      let url = "";
-
-      if (query) {
-        url = `https://api.themoviedb.org/3/search/movie?api_key=52ef927bbeb21980cd91386a29403c78&query=${query}&language=ar`;
-      } else {
-        url = `https://api.themoviedb.org/3/movie/popular?api_key=52ef927bbeb21980cd91386a29403c78&language=ar`;
-      }
+      const url = query
+        ? `https://api.themoviedb.org/3/search/movie?api_key=52ef927bbeb21980cd91386a29403c78&query=${query}&language=ar`
+        : `https://api.themoviedb.org/3/movie/popular?api_key=52ef927bbeb21980cd91386a29403c78&language=ar`;
 
       const res = await axios.get(url);
       setMovies(res.data.results);
