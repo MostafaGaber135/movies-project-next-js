@@ -19,11 +19,15 @@ interface Movie {
 export default function MovieDetails() {
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<Movie | null>(null);
+  const base_Url = "https://api.themoviedb.org/3/movie";
+  const base_Url_Image = "https://image.tmdb.org/t/p/w500";
+  const api_key = "52ef927bbeb21980cd91386a29403c78";
+  const language = "ar";
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=52ef927bbeb21980cd91386a29403c78&language=ar`
+        `${base_Url}/${id}?api_key=${api_key}&language=${language}`
       );
       setMovie(res.data);
     };
@@ -38,7 +42,7 @@ export default function MovieDetails() {
       <div className="flex justify-center mt-4">
         <div className="h-[370px] rounded-[20px] bg-[#f8f8f8] flex items-center w-full max-w-5xl px-4">
           <Image
-            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+            src={`${base_Url_Image}/${movie.poster_path}`}
             alt="movie"
             width={300}
             height={450}
@@ -62,10 +66,10 @@ export default function MovieDetails() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 text-end">
         <div className="h-[300px] rounded-[20px] bg-[#f8f8f8] w-full max-w-5xl p-4">
-          <p className="text-[36px] font-bold border-b mb-2">القصة:</p>
-          <p className="text-[18px]">{movie.overview}</p>
+          <p className="text-[36px] font-bold border-b mb-2">:القصة</p>
+          <p className="text-[18px] ">{movie.overview}</p>
         </div>
       </div>
 
